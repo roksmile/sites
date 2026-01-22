@@ -17,4 +17,33 @@ firewall-cmd --reload
 
 ## 3. keepalived 설정 (/etc/keepalived/keepalived.conf
 ```
-! C
+! Configuration File for keepalived
+
+global_defs {
+   router_id HAPROXY_01
+   vrrp_skip_check_adv_addr
+   vrrp_garp_interval 0
+   vrrp_gna_interval 0
+}
+
+vrrp_script check_haproxy {
+    script "pidof haproxy"
+    interval 2
+    weight -20
+}
+
+vrrp_instance VI_1 {
+    state MASTER
+    interface ens192
+    virtual_router_id 51
+    priority 101
+    advert_int 1
+    authentication {
+        auth_type PASS
+        auth_pass 1111
+    }
+    virtual_ipaddress {
+        10.60.1.60
+    }
+}
+```
