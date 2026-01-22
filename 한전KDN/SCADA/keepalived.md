@@ -15,6 +15,14 @@ firewall-cmd --add-rich-rule='rule protocol value="vrrp" accept' --permanent
 firewall-cmd --reload
 ```
 
+## 3. kernel parameter 수정(/etc/sysctl.conf)
+```
+net.ipv4.ip_nonlocal_bind = 1
+net.ipv4.ip_forward = 1
+
+sysctl -p
+```
+
 ## 3. keepalived 설정 (/etc/keepalived/keepalived.conf
 ```
 ! Configuration File for keepalived
