@@ -25,33 +25,33 @@ sysctl -p
 
 ## 3. keepalived 설정 (/etc/keepalived/keepalived.conf
 ```
-! Configuration File for keepalived
-
 global_defs {
-   router_id HAPROXY_01
-   vrrp_skip_check_adv_addr
-   vrrp_garp_interval 0
-   vrrp_gna_interval 0
+   notification_email {
+     ocpadmin@kdneri.com
+   }   
 }
-
-vrrp_script check_haproxy {
-    script "pidof haproxy"
-    interval 2
-    weight -20
+ 
+vrrp_script chk_haproxy {
+  script "killall -0 haproxy" # check the haproxy process
+  interval 2 # every 2 seconds
+  weight 2 # add 2 points if OK
 }
-
-vrrp_instance VI_1 {
-    state MASTER
-    interface ens192
+ 
+vrrp_instance HAPROXY_1 {
+    state BACKUP
+    interface eth0
     virtual_router_id 51
-    priority 101
+    priority 100 
     advert_int 1
     authentication {
         auth_type PASS
         auth_pass 1111
-    }
+    }   
     virtual_ipaddress {
         10.60.1.60
-    }
+    }   
+    track_script {                                                                                                      
+      chk_haproxy 
+    }   
 }
 ```
