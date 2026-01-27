@@ -50,8 +50,8 @@ vrrp_instance HAPROXY_1 {
     virtual_ipaddress {
         10.60.1.60
     }   
-    track_script {                                                                                                      
-      chk_haproxy 
+    track_script {
+       chk_haproxy 
     }   
 }
 ```
