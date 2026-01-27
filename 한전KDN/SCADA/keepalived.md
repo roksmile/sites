@@ -23,7 +23,7 @@ net.ipv4.ip_forward = 1
 sysctl -p
 ```
 
-## 3. keepalived 설정 (/etc/keepalived/keepalived.conf
+## 3. keepalived 설정 (/etc/keepalived/keepalived.conf)
 ```
 global_defs {
    notification_email {
